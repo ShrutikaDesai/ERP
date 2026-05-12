@@ -113,7 +113,7 @@ const AdminLayout = () => {
             <div
               className="w-10 h-10 rounded-xl flex items-center justify-center text-white font-bold"
               style={{
-                background: theme.colors.primary,
+                background: theme.colors.textPrimary,
               }}
             >
               ERP
@@ -269,7 +269,7 @@ const AdminLayout = () => {
                   text-xs font-bold text-white
                 "
                 style={{
-                  background: theme.colors.primary,
+                  background: theme.colors.textPrimary,
                 }}
               >
                 BH
