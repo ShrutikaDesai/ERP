@@ -17,6 +17,8 @@ import {
   LogOut,
    School,
   Layers3,
+  BookMarkedIcon,
+  RepeatOff,
 } from "lucide-react";
 
 import { theme } from "@/theme/theme";
@@ -53,11 +55,27 @@ const menuItems = [
     icon: BadgeDollarSign,
     path: "/s-admin/fees",
   },
+  // {
+  //   title: "Attendance",
+  //   icon: CalendarCheck,
+  //   path: "/s-admin/attendance",
+  // },
   {
-    title: "Attendance",
-    icon: CalendarCheck,
-    path: "/s-admin/attendance",
-  },
+  title: "Attendance",
+  icon: CalendarCheck,
+  children: [
+    {
+      title: "Mark Attendance",
+      icon: BookMarkedIcon,
+      path: "/s-admin/mark-attendance",
+    },
+    {
+      title: "Attendance Reports",
+      icon: RepeatOff,
+      path: "/s-admin/attendance-reports",
+    },
+  ],
+},
   {
     title: "Exams",
     icon: FileText,
