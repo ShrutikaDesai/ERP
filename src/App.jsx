@@ -14,6 +14,8 @@ import Classes from "./components/admin/academics/Classes";
 import Sections from "./components/admin/academics/Sections";
 import StudentList from "./components/admin/students/StudentList";
 
+import ExamsResults from "./components/admin/exam/ExamsResults";
+import AttendanceManagement from "./components/admin/attendance/AttendanceManagement ";
 
 function App() {
   return (
@@ -36,6 +38,21 @@ function App() {
           <Route path="students" element={<StudentList />} />
           <Route path="classes" element={<Classes />} />
            <Route path="sections" element={<Sections />} />
+          {/* Dashboard */}
+          <Route
+            path="dashboard"
+            element={<Dashboard />}
+          />
+
+
+
+
+
+
+
+
+          <Route path="attendance" element={<AttendanceManagement />} />
+          <Route path="exams" element={<ExamsResults />} />
 
         </Route>
 
