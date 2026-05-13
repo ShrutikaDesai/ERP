@@ -15,7 +15,7 @@ import {
   User,
   Settings,
   LogOut,
-   School,
+  School,
   Layers3,
 } from "lucide-react";
 
@@ -33,21 +33,21 @@ const menuItems = [
     path: "/s-admin/students",
   },
   {
-  title: "Academic",
-  icon: GraduationCap,
-  children: [
-    {
-      title: "Classes",
-      icon: School,
-      path: "/s-admin/classes",
-    },
-    {
-      title: "Sections",
-      icon: Layers3,
-      path: "/s-admin/sections",
-    },
-  ],
-},
+    title: "Academic",
+    icon: GraduationCap,
+    children: [
+      {
+        title: "Classes",
+        icon: School,
+        path: "/s-admin/classes",
+      },
+      {
+        title: "Sections",
+        icon: Layers3,
+        path: "/s-admin/sections",
+      },
+    ],
+  },
   {
     title: "Fees",
     icon: BadgeDollarSign,
@@ -80,11 +80,9 @@ const AdminLayout = () => {
   const [sidebarOpen, setSidebarOpen] =
     useState(false);
 
-const [profileOpen, setProfileOpen] =
-  useState(false);
+  const [profileOpen, setProfileOpen] =
+    useState(false);
 
-const [drawerOpen, setDrawerOpen] =
-  useState(false);
 
   return (
     <div
@@ -102,28 +100,25 @@ const [drawerOpen, setDrawerOpen] =
       )}
 
       {/* SIDEBAR */}
-  <aside
-  className={`
+      <aside
+        className={`
     fixed top-0 left-0
-    z-50
+    z-30
     h-screen
     flex flex-col
     transition-all duration-300
 
-    ${
-      drawerOpen
-        ? "-translate-x-full"
-        : sidebarOpen
-        ? "translate-x-0"
-        : "-translate-x-full lg:translate-x-0"
-    }
+   ${sidebarOpen
+            ? "translate-x-0"
+            : "-translate-x-full lg:translate-x-0"
+          }
   `}
-  style={{
-    width: theme.layout.sidebarWidth,
-    background: theme.colors.sidebar,
-    borderRight: `1px solid ${theme.colors.border}`,
-  }}
->
+        style={{
+          width: theme.layout.sidebarWidth,
+          background: theme.colors.sidebar,
+          borderRight: `1px solid ${theme.colors.border}`,
+        }}
+      >
         {/* Logo */}
         <div
           className="flex items-center justify-between px-6 flex-shrink-0"
@@ -160,39 +155,39 @@ const [drawerOpen, setDrawerOpen] =
           </button>
         </div>
 
-       {/* Menu Scrollable */}
-<div className="flex-1 overflow-y-auto p-4 space-y-2">
-  {menuItems.map((item) => {
-    const Icon = item.icon;
+        {/* Menu Scrollable */}
+        <div className="flex-1 overflow-y-auto p-4 space-y-2">
+          {menuItems.map((item) => {
+            const Icon = item.icon;
 
-    const isParentActive =
-      item.children &&
-      item.children.some(
-        (sub) => location.pathname === sub.path
-      );
-
-    const isActive =
-      location.pathname === item.path ||
-      isParentActive;
-
-    return (
-      <div key={item.title}>
-        {/* Main Menu */}
-        <button
-          onClick={() => {
-            if (item.children) {
-              setActiveMenu(
-                activeMenu === item.title
-                  ? ""
-                  : item.title
+            const isParentActive =
+              item.children &&
+              item.children.some(
+                (sub) => location.pathname === sub.path
               );
-            } else {
-              navigate(item.path);
 
-              setSidebarOpen(false);
-            }
-          }}
-          className="
+            const isActive =
+              location.pathname === item.path ||
+              isParentActive;
+
+            return (
+              <div key={item.title}>
+                {/* Main Menu */}
+                <button
+                  onClick={() => {
+                    if (item.children) {
+                      setActiveMenu(
+                        activeMenu === item.title
+                          ? ""
+                          : item.title
+                      );
+                    } else {
+                      navigate(item.path);
+
+                      setSidebarOpen(false);
+                    }
+                  }}
+                  className="
             w-full
             flex
             items-center
@@ -204,62 +199,62 @@ const [drawerOpen, setDrawerOpen] =
             text-sm
             font-medium
           "
-          style={{
-            background: isActive
-              ? theme.colors.sidebarActive
-              : "transparent",
+                  style={{
+                    background: isActive
+                      ? theme.colors.sidebarActive
+                      : "transparent",
 
-            color: isActive
-              ? theme.colors.sidebarActiveText
-              : theme.colors.sidebarItem,
-          }}
-        >
-          <div className="flex items-center gap-3">
-            <Icon size={18} />
-            {item.title}
-          </div>
+                    color: isActive
+                      ? theme.colors.sidebarActiveText
+                      : theme.colors.sidebarItem,
+                  }}
+                >
+                  <div className="flex items-center gap-3">
+                    <Icon size={18} />
+                    {item.title}
+                  </div>
 
-          {item.children && (
-            <ChevronDown
-              size={16}
-              style={{
-                transform:
-                  activeMenu === item.title ||
-                  isParentActive
-                    ? "rotate(180deg)"
-                    : "rotate(0deg)",
-                transition: "0.3s",
-              }}
-            />
-          )}
-        </button>
+                  {item.children && (
+                    <ChevronDown
+                      size={16}
+                      style={{
+                        transform:
+                          activeMenu === item.title ||
+                            isParentActive
+                            ? "rotate(180deg)"
+                            : "rotate(0deg)",
+                        transition: "0.3s",
+                      }}
+                    />
+                  )}
+                </button>
 
-        {/* Dropdown */}
-        {item.children &&
-          (activeMenu === item.title ||
-            isParentActive) && (
-            <div
-              className="ml-6 mt-2 space-y-1"
-              style={{
-                borderLeft: `1px solid ${theme.colors.border}`,
-                paddingLeft: "12px",
-              }}
-            >
-             {item.children.map((sub) => {
-  const isSubActive =
-    location.pathname === sub.path;
+                {/* Dropdown */}
+                {item.children &&
+                  (activeMenu === item.title ||
+                    isParentActive) && (
+                    <div
+                      className="ml-6 mt-2 space-y-1"
+                      style={{
+                        borderLeft: `1px solid ${theme.colors.border}`,
+                        paddingLeft: "12px",
+                      }}
+                    >
+                      {item.children.map((sub) => {
+                        const isSubActive =
+                          location.pathname === sub.path;
 
-  const SubIcon = sub.icon;
+                        const SubIcon = sub.icon;
 
-  return (
-    <button
-      key={sub.title}
-      onClick={() => {
-        navigate(sub.path);
+                        return (
+                          <button
+                            key={sub.title}
+                            onClick={() => {
+                              navigate(sub.path);
 
-        setSidebarOpen(false);
-      }}
-      className="
+                              setSidebarOpen(false);
+                            }}
+                            className="
         w-full
         flex
         items-center
@@ -271,32 +266,32 @@ const [drawerOpen, setDrawerOpen] =
         text-sm
         transition-all
       "
-      style={{
-        background: isSubActive
-          ? theme.colors.sidebarActive
-          : "transparent",
+                            style={{
+                              background: isSubActive
+                                ? theme.colors.sidebarActive
+                                : "transparent",
 
-        color: isSubActive
-          ? theme.colors.sidebarActiveText
-          : theme.colors.textSecondary,
+                              color: isSubActive
+                                ? theme.colors.sidebarActiveText
+                                : theme.colors.textSecondary,
 
-        fontWeight: isSubActive
-          ? 600
-          : 500,
-      }}
-    >
-      <SubIcon size={16} />
+                              fontWeight: isSubActive
+                                ? 600
+                                : 500,
+                            }}
+                          >
+                            <SubIcon size={16} />
 
-      {sub.title}
-    </button>
-  );
-})}
-            </div>
-          )}
-      </div>
-    );
-  })}
-</div>
+                            {sub.title}
+                          </button>
+                        );
+                      })}
+                    </div>
+                  )}
+              </div>
+            );
+          })}
+        </div>
 
         {/* Bottom User */}
         <div
@@ -336,15 +331,15 @@ const [drawerOpen, setDrawerOpen] =
       </aside>
 
       {/* MAIN AREA */}
-    <div
-  className="flex-1 flex flex-col overflow-hidden transition-all duration-300"
-  style={{
-   marginLeft:
-  window.innerWidth >= 1024 && !drawerOpen
-    ? theme.layout.sidebarWidth
-    : 0,
-  }}
->
+      <div
+        className="flex-1 flex flex-col overflow-hidden transition-all duration-300"
+        style={{
+          marginLeft:
+            window.innerWidth >= 1024
+              ? theme.layout.sidebarWidth
+              : 0,
+        }}
+      >
         {/* HEADER */}
         <header
           className="
@@ -542,11 +537,7 @@ const [drawerOpen, setDrawerOpen] =
                 : theme.layout.contentPadding,
           }}
         >
-         <Outlet
-  context={{
-    setDrawerOpen,
-  }}
-/>
+          <Outlet />
         </main>
       </div>
     </div>

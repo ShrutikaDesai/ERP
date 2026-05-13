@@ -16,6 +16,7 @@ import StudentList from "./components/admin/students/StudentList";
 
 import ExamsResults from "./components/admin/exam/ExamsResults";
 import AttendanceManagement from "./components/admin/attendance/AttendanceManagement ";
+import ViewStudentDetails from "./components/admin/students/ViewStudentDetails";
 
 function App() {
   return (
@@ -36,8 +37,10 @@ function App() {
           <Route index element={<Navigate to="dashboard" />} />
           <Route path="dashboard" element={<Dashboard />} />
           <Route path="students" element={<StudentList />} />
+           <Route path="student-details/:id" element={<ViewStudentDetails />} />
           <Route path="classes" element={<Classes />} />
           <Route path="sections" element={<Sections />} />
+
 
 
 
