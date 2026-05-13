@@ -17,6 +17,8 @@ import {
   LogOut,
   School,
   Layers3,
+  Users,
+  UserPlus,
 } from "lucide-react";
 
 import { theme } from "@/theme/theme";
@@ -30,8 +32,20 @@ const menuItems = [
   {
     title: "Students",
     icon: GraduationCap,
-    path: "/s-admin/students",
+    children: [
+      {
+        title: "Student List",
+        icon: Users,
+        path: "/s-admin/students",
+      },
+      {
+        title: "Add Student",
+        icon: UserPlus,
+        path: "/s-admin/add-student",
+      },
+    ],
   },
+
   {
     title: "Academic",
     icon: GraduationCap,

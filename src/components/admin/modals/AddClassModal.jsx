@@ -70,9 +70,13 @@ const AddClassModal = ({
       />
 
       {/* Modal */}
-      <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-        <div
-          className="w-full max-w-2xl rounded-3xl overflow-hidden"
+<div
+  className="fixed inset-0 z-50 flex items-center justify-center p-4"
+  onClick={onClose}
+>
+  <div
+    onClick={(e) => e.stopPropagation()}
+    className="w-full max-w-2xl rounded-3xl overflow-hidden"
           style={{
             background:
               theme.colors.cardBg,
