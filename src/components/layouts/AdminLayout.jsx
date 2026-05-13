@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Outlet, useNavigate } from "react-router-dom";
+import { Outlet, useNavigate, useLocation } from "react-router-dom";
 
 import {
   LayoutDashboard,
@@ -9,13 +9,14 @@ import {
   FileText,
   MessageSquare,
   Bell,
-  Search,
   ChevronDown,
   Menu,
   X,
   User,
   Settings,
   LogOut,
+   School,
+  Layers3,
 } from "lucide-react";
 
 import { theme } from "@/theme/theme";
@@ -31,6 +32,22 @@ const menuItems = [
     icon: GraduationCap,
     path: "/s-admin/students",
   },
+  {
+  title: "Academic",
+  icon: GraduationCap,
+  children: [
+    {
+      title: "Classes",
+      icon: School,
+      path: "/s-admin/classes",
+    },
+    {
+      title: "Sections",
+      icon: Layers3,
+      path: "/s-admin/sections",
+    },
+  ],
+},
   {
     title: "Fees",
     icon: BadgeDollarSign,
@@ -55,6 +72,7 @@ const menuItems = [
 
 const AdminLayout = () => {
   const navigate = useNavigate();
+  const location = useLocation();
 
   const [activeMenu, setActiveMenu] =
     useState("Dashboard");
@@ -62,12 +80,15 @@ const AdminLayout = () => {
   const [sidebarOpen, setSidebarOpen] =
     useState(false);
 
-  const [profileOpen, setProfileOpen] =
-    useState(false);
+const [profileOpen, setProfileOpen] =
+  useState(false);
+
+const [drawerOpen, setDrawerOpen] =
+  useState(false);
 
   return (
     <div
-      className="min-h-screen flex overflow-hidden"
+      className="h-screen overflow-hidden flex"
       style={{
         background: theme.colors.background,
       }}
@@ -80,30 +101,32 @@ const AdminLayout = () => {
         />
       )}
 
-      {/* Sidebar */}
-      <aside
-        className={`
-          fixed lg:static
-          top-0 left-0 z-50
-          h-screen
-          flex flex-col
-          transition-all duration-300
-          ${
-            sidebarOpen
-              ? "translate-x-0"
-              : "-translate-x-full"
-          }
-          lg:translate-x-0
-        `}
-        style={{
-          width: theme.layout.sidebarWidth,
-          background: theme.colors.sidebar,
-          borderRight: `1px solid ${theme.colors.border}`,
-        }}
-      >
+      {/* SIDEBAR */}
+  <aside
+  className={`
+    fixed top-0 left-0
+    z-50
+    h-screen
+    flex flex-col
+    transition-all duration-300
+
+    ${
+      drawerOpen
+        ? "-translate-x-full"
+        : sidebarOpen
+        ? "translate-x-0"
+        : "-translate-x-full lg:translate-x-0"
+    }
+  `}
+  style={{
+    width: theme.layout.sidebarWidth,
+    background: theme.colors.sidebar,
+    borderRight: `1px solid ${theme.colors.border}`,
+  }}
+>
         {/* Logo */}
         <div
-          className="flex items-center justify-between px-6"
+          className="flex items-center justify-between px-6 flex-shrink-0"
           style={{
             height: theme.layout.navbarHeight,
             borderBottom: `1px solid ${theme.colors.border}`,
@@ -129,7 +152,6 @@ const AdminLayout = () => {
             </span>
           </div>
 
-          {/* Close Mobile */}
           <button
             className="lg:hidden"
             onClick={() => setSidebarOpen(false)}
@@ -138,57 +160,147 @@ const AdminLayout = () => {
           </button>
         </div>
 
-        {/* Menu */}
-        <div className="flex-1 p-4 space-y-2 overflow-y-auto">
-          {menuItems.map((item) => {
-            const Icon = item.icon;
+       {/* Menu Scrollable */}
+<div className="flex-1 overflow-y-auto p-4 space-y-2">
+  {menuItems.map((item) => {
+    const Icon = item.icon;
 
-            const isActive =
-              activeMenu === item.title;
+    const isParentActive =
+      item.children &&
+      item.children.some(
+        (sub) => location.pathname === sub.path
+      );
 
-            return (
-              <button
-                key={item.title}
-                onClick={() => {
-                  setActiveMenu(item.title);
+    const isActive =
+      location.pathname === item.path ||
+      isParentActive;
 
-                  navigate(item.path);
+    return (
+      <div key={item.title}>
+        {/* Main Menu */}
+        <button
+          onClick={() => {
+            if (item.children) {
+              setActiveMenu(
+                activeMenu === item.title
+                  ? ""
+                  : item.title
+              );
+            } else {
+              navigate(item.path);
 
-                  setSidebarOpen(false);
-                }}
-                className="
-                  w-full
-                  flex
-                  items-center
-                  gap-3
-                  px-4
-                  py-3
-                  rounded-lg
-                  transition-all
-                  text-sm
-                  font-medium
-                "
-                style={{
-                  background: isActive
-                    ? theme.colors.sidebarActive
-                    : "transparent",
+              setSidebarOpen(false);
+            }
+          }}
+          className="
+            w-full
+            flex
+            items-center
+            justify-between
+            px-4
+            py-3
+            rounded-lg
+            transition-all
+            text-sm
+            font-medium
+          "
+          style={{
+            background: isActive
+              ? theme.colors.sidebarActive
+              : "transparent",
 
-                  color: isActive
-                    ? theme.colors.sidebarActiveText
-                    : theme.colors.sidebarItem,
-                }}
-              >
-                <Icon size={18} />
+            color: isActive
+              ? theme.colors.sidebarActiveText
+              : theme.colors.sidebarItem,
+          }}
+        >
+          <div className="flex items-center gap-3">
+            <Icon size={18} />
+            {item.title}
+          </div>
 
-                {item.title}
-              </button>
-            );
-          })}
-        </div>
+          {item.children && (
+            <ChevronDown
+              size={16}
+              style={{
+                transform:
+                  activeMenu === item.title ||
+                  isParentActive
+                    ? "rotate(180deg)"
+                    : "rotate(0deg)",
+                transition: "0.3s",
+              }}
+            />
+          )}
+        </button>
 
-        {/* User Bottom */}
+        {/* Dropdown */}
+        {item.children &&
+          (activeMenu === item.title ||
+            isParentActive) && (
+            <div
+              className="ml-6 mt-2 space-y-1"
+              style={{
+                borderLeft: `1px solid ${theme.colors.border}`,
+                paddingLeft: "12px",
+              }}
+            >
+             {item.children.map((sub) => {
+  const isSubActive =
+    location.pathname === sub.path;
+
+  const SubIcon = sub.icon;
+
+  return (
+    <button
+      key={sub.title}
+      onClick={() => {
+        navigate(sub.path);
+
+        setSidebarOpen(false);
+      }}
+      className="
+        w-full
+        flex
+        items-center
+        gap-3
+        text-left
+        px-3
+        py-2
+        rounded-lg
+        text-sm
+        transition-all
+      "
+      style={{
+        background: isSubActive
+          ? theme.colors.sidebarActive
+          : "transparent",
+
+        color: isSubActive
+          ? theme.colors.sidebarActiveText
+          : theme.colors.textSecondary,
+
+        fontWeight: isSubActive
+          ? 600
+          : 500,
+      }}
+    >
+      <SubIcon size={16} />
+
+      {sub.title}
+    </button>
+  );
+})}
+            </div>
+          )}
+      </div>
+    );
+  })}
+</div>
+
+        {/* Bottom User */}
         <div
-          className="p-4"
+          className="p-4 flex-shrink-0"
           style={{
             borderTop: `1px solid ${theme.colors.border}`,
           }}
@@ -223,11 +335,20 @@ const AdminLayout = () => {
         </div>
       </aside>
 
-      {/* Main */}
-      <div className="flex-1 flex flex-col w-full">
-        {/* Header */}
+      {/* MAIN AREA */}
+    <div
+  className="flex-1 flex flex-col overflow-hidden transition-all duration-300"
+  style={{
+   marginLeft:
+  window.innerWidth >= 1024 && !drawerOpen
+    ? theme.layout.sidebarWidth
+    : 0,
+  }}
+>
+        {/* HEADER */}
         <header
           className="
+            flex-shrink-0
             px-4 md:px-6
             flex items-center justify-between
             gap-4
@@ -238,9 +359,8 @@ const AdminLayout = () => {
             borderBottom: `1px solid ${theme.colors.border}`,
           }}
         >
-          {/* Left */}
+          {/* LEFT */}
           <div className="flex items-center gap-3">
-            {/* Mobile Menu */}
             <button
               className="lg:hidden"
               onClick={() => setSidebarOpen(true)}
@@ -248,7 +368,6 @@ const AdminLayout = () => {
               <Menu size={24} />
             </button>
 
-            {/* Campus */}
             <button
               className="
                 h-11
@@ -272,7 +391,7 @@ const AdminLayout = () => {
                   background: theme.colors.textPrimary,
                 }}
               >
-                BH
+                DYP
               </div>
 
               <span
@@ -284,59 +403,15 @@ const AdminLayout = () => {
                   color: theme.colors.textPrimary,
                 }}
               >
-                Bright Hill Main Campus
+                DYP Campus
               </span>
 
               <ChevronDown size={16} />
             </button>
           </div>
 
-          {/* Right */}
+          {/* RIGHT */}
           <div className="flex items-center gap-3">
-            {/* Search */}
-            {/* <div
-              className="
-                hidden md:flex
-                items-center
-                h-11
-                w-[260px] xl:w-[320px]
-                rounded-xl
-                px-4
-              "
-              style={{
-                border: `1px solid ${theme.colors.border}`,
-                background: theme.colors.surface,
-              }}
-            >
-              <Search
-                size={18}
-                color={theme.colors.textMuted}
-              />
-
-              <input
-                type="text"
-                placeholder="Search..."
-                className="
-                  flex-1
-                  bg-transparent
-                  outline-none
-                  border-none
-                  px-3
-                  text-sm
-                "
-              />
-
-              <span
-                className="text-xs"
-                style={{
-                  color: theme.colors.textMuted,
-                }}
-              >
-                ⌘K
-              </span>
-            </div> */}
-
-            {/* Notification */}
             <button
               className="
                 relative
@@ -354,7 +429,7 @@ const AdminLayout = () => {
               <span className="absolute top-2 right-2 w-2 h-2 rounded-full bg-red-500" />
             </button>
 
-            {/* Profile Dropdown */}
+            {/* PROFILE */}
             <div className="relative">
               <button
                 onClick={() =>
@@ -402,7 +477,6 @@ const AdminLayout = () => {
                 <ChevronDown size={16} />
               </button>
 
-              {/* Dropdown */}
               {profileOpen && (
                 <div
                   className="
@@ -422,13 +496,7 @@ const AdminLayout = () => {
                   }}
                 >
                   <button
-                    className="
-                      w-full
-                      flex items-center gap-3
-                      px-4 py-3
-                      text-sm
-                      hover:bg-gray-50
-                    "
+                    className="w-full flex items-center gap-3 px-4 py-3 text-sm"
                     onClick={() => {
                       navigate("/s-admin/profile");
                       setProfileOpen(false);
@@ -439,13 +507,7 @@ const AdminLayout = () => {
                   </button>
 
                   <button
-                    className="
-                      w-full
-                      flex items-center gap-3
-                      px-4 py-3
-                      text-sm
-                      hover:bg-gray-50
-                    "
+                    className="w-full flex items-center gap-3 px-4 py-3 text-sm"
                     onClick={() => {
                       navigate("/s-admin/settings");
                       setProfileOpen(false);
@@ -456,14 +518,7 @@ const AdminLayout = () => {
                   </button>
 
                   <button
-                    className="
-                      w-full
-                      flex items-center gap-3
-                      px-4 py-3
-                      text-sm
-                      text-red-500
-                      hover:bg-red-50
-                    "
+                    className="w-full flex items-center gap-3 px-4 py-3 text-sm text-red-500"
                     onClick={() => {
                       navigate("/login");
                     }}
@@ -477,9 +532,9 @@ const AdminLayout = () => {
           </div>
         </header>
 
-        {/* Content */}
+        {/* SCROLLABLE CONTENT */}
         <main
-          className="flex-1 overflow-auto"
+          className="flex-1 overflow-y-auto"
           style={{
             padding:
               window.innerWidth < 768
@@ -487,7 +542,11 @@ const AdminLayout = () => {
                 : theme.layout.contentPadding,
           }}
         >
-          <Outlet />
+         <Outlet
+  context={{
+    setDrawerOpen,
+  }}
+/>
         </main>
       </div>
     </div>

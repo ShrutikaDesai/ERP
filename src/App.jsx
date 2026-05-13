@@ -7,27 +7,41 @@ import {
 } from "react-router-dom";
 
 import AdminLayout from "./components/layouts/AdminLayout";
+import AdminLogin from "./components/admin/AdminLogin";
+import AdminSignup from "./components/admin/AdminSignup";
 import Dashboard from "./components/admin/dashboard/Dashboard";
+import Classes from "./components/admin/academics/Classes";
+import Sections from "./components/admin/academics/Sections";
+import StudentList from "./components/admin/students/StudentList";
+
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
+
+        {/* Default Route */}
+        <Route path="/" element={<Navigate to="/login" />} />
+
+        {/* Auth Routes */}
+        <Route path="/login" element={<AdminLogin />} />
+        <Route path="/signup" element={<AdminSignup />} />
+
         {/* Admin Routes */}
         <Route path="/s-admin" element={<AdminLayout />}>
-          
-          {/* Default Redirect */}
-          <Route
-            index
-            element={<Navigate to="dashboard" />}
-          />
 
-          {/* Dashboard */}
-          <Route
-            path="dashboard"
-            element={<Dashboard />}
-          />
+          {/* Default Redirect */}
+          <Route index element={<Navigate to="dashboard" />} />
+          <Route path="dashboard" element={<Dashboard />} />
+          <Route path="students" element={<StudentList />} />
+          <Route path="classes" element={<Classes />} />
+           <Route path="sections" element={<Sections />} />
+
         </Route>
+
+        {/* 404 Route */}
+        {/* <Route path="*" element={<h1>Page Not Found</h1>} /> */}
+
       </Routes>
     </BrowserRouter>
   );

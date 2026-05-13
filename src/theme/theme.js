@@ -36,6 +36,13 @@ export const theme = {
     // Table
     tableHeader: "#F9FAFB",
     tableBorder: "#ECEEF2",
+
+    // Drawer
+    drawerBg: "#FFFFFF",
+    drawerOverlay: "rgba(0,0,0,0.45)",
+    drawerHeader: "#FFFFFF",
+    drawerCard: "#F9FAFB",
+    drawerHover: "#F3F4F6",
   },
 
   radius: {
@@ -49,10 +56,15 @@ export const theme = {
     card: "0 1px 3px rgba(0,0,0,0.06)",
     navbar: "0 1px 2px rgba(0,0,0,0.04)",
     modal: "0 10px 30px rgba(0,0,0,0.08)",
+    drawer: "-8px 0 30px rgba(0,0,0,0.12)",
   },
 
   typography: {
-    fontFamily: "'Inter', sans-serif",
+    // fontFamily: "'Inter', sans-serif",
+    // fontFamily: "'Geist', sans-serif",
+    fontFamily: "'Plus Jakarta Sans', sans-serif",
+
+
 
     h1: "text-3xl font-bold",
     h2: "text-2xl font-semibold",
@@ -68,6 +80,8 @@ export const theme = {
   layout: {
     sidebarWidth: "240px",
     navbarHeight: "72px",
-    contentPadding: "24px",
+    contentPadding: "15px",
+
+    drawerWidth: "440px",
   },
 };
