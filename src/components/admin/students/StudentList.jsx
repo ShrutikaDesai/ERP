@@ -294,7 +294,7 @@ function Select({
 
 // ── Main Component ──────────────────────────────────────────────────────────
 export default function StudentList() {
-    const navigate = useNavigate();
+  const navigate = useNavigate();
   const [globalFilter, setGlobalFilter] = useState("");
   const [gradeFilter, setGradeFilter] = useState("");
   const [sectionFilter, setSectionFilter] = useState("");
@@ -635,16 +635,16 @@ export default function StudentList() {
             Export
           </button>
 
- <button
-      onClick={() => navigate("/s-admin/add-student")}
-      className="flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-semibold text-white"
-      style={{
-        background: theme.colors.primary,
-      }}
-    >
-      <Plus size={16} />
-      Add Student
-    </button>
+          <button
+            onClick={() => navigate("/s-admin/add-student")}
+            className="flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-semibold text-white"
+            style={{
+              background: theme.colors.primary,
+            }}
+          >
+            <Plus size={16} />
+            Add Student
+          </button>
         </div>
       </div>
 
@@ -949,10 +949,10 @@ export default function StudentList() {
         </div>
 
         {/* RIGHT SIDE DRAWER */}
-     <StudentDrawer
-  selectedStudent={selectedStudent}
-  setSelectedStudent={setSelectedStudent}
-/>
+        <StudentDrawer
+          selectedStudent={selectedStudent}
+          setSelectedStudent={setSelectedStudent}
+        />
       </div>
     </div>
   );
