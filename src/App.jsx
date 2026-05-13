@@ -18,6 +18,8 @@ import ExamsResults from "./components/admin/exam/ExamsResults";
 import AttendanceManagement from "./components/admin/attendance/AttendanceManagement ";
 import ViewStudentDetails from "./components/admin/students/ViewStudentDetails";
 import AddStudent from "./components/admin/students/AddStudent";
+import MarkAttendancePage from "./components/admin/attendance/MarkAttendancePage";
+import AttendanceReportPage from "./components/admin/attendance/AttendanceReportPage";
 
 function App() {
   return (
@@ -52,6 +54,8 @@ function App() {
 
 
           <Route path="attendance" element={<AttendanceManagement />} />
+          <Route path="mark-attendance" element={<MarkAttendancePage />} />
+          <Route path="attendance-reports" element={<AttendanceReportPage />} />
           <Route path="exams" element={<ExamsResults />} />
 
         </Route>

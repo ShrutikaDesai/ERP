@@ -17,6 +17,7 @@ import {
   CartesianGrid,
 } from "recharts";
 
+import AddExamModal from "../modals/AddExamModal";
 
 import DataTable from "@/components/common-ui/DataTable";
 import { theme } from "@/theme/theme";
@@ -67,7 +68,6 @@ const chartData = [
   { range: "80-100", students: 35 },
 ];
 
-
 function StatsCard({ title, value, subtitle, icon, color }) {
   return (
     <div
@@ -92,10 +92,7 @@ function StatsCard({ title, value, subtitle, icon, color }) {
         >
           {value}
         </h3>
-        <p
-          className="text-xs mt-2"
-          style={{ color: theme.colors.textMuted }}
-        >
+        <p className="text-xs mt-2" style={{ color: theme.colors.textMuted }}>
           {subtitle}
         </p>
       </div>
@@ -108,8 +105,12 @@ const ExamsResults = () => {
   const [search, setSearch] = useState("");
   const [selectedGrade, setSelectedGrade] = useState("All Grades");
 
+  const [examList, setExamList] = useState(examsData);
+
+  const [openModal, setOpenModal] = useState(false);
+
   const filteredData = useMemo(() => {
-    return examsData.filter((exam) => {
+    return examList.filter((exam) => {
       const matchesSearch = exam.examName
         .toLowerCase()
         .includes(search.toLowerCase());
@@ -133,10 +134,7 @@ const ExamsResults = () => {
           >
             {row.original.examName}
           </p>
-          <p
-            className="text-xs"
-            style={{ color: theme.colors.textMuted }}
-          >
+          <p className="text-xs" style={{ color: theme.colors.textMuted }}>
             Max Marks: {row.original.marks}
           </p>
         </div>
@@ -150,10 +148,7 @@ const ExamsResults = () => {
       cell: ({ row }) => (
         <div>
           <p>{row.original.date}</p>
-          <p
-            className="text-xs"
-            style={{ color: theme.colors.textMuted }}
-          >
+          <p className="text-xs" style={{ color: theme.colors.textMuted }}>
             {row.original.time}
           </p>
         </div>
@@ -169,8 +164,8 @@ const ExamsResults = () => {
           status === "Upcoming"
             ? "bg-blue-100 text-blue-600"
             : status === "Completed"
-            ? "bg-green-100 text-green-600"
-            : "bg-yellow-100 text-yellow-700";
+              ? "bg-green-100 text-green-600"
+              : "bg-yellow-100 text-yellow-700";
 
         return (
           <span
@@ -183,6 +178,10 @@ const ExamsResults = () => {
     },
   ];
 
+  const handleAddExam = (exam) => {
+    setExamList((prev) => [exam, ...prev]);
+  };
+
   return (
     <div
       className="min-h-screen"
@@ -194,24 +193,24 @@ const ExamsResults = () => {
     >
       <div className="flex flex-col lg:flex-row justify-between lg:items-center gap-4 mb-8">
         <div>
-            <h1
-                className="font-bold my-3"
-                style={{
-                    color: theme.colors.textPrimary,
-                    fontSize: "40px",
-                    letterSpacing: "-1.68px",
-                    margin: "16px 0",
-                }}
-                >
-                Exams & Results
-            </h1>
+          <h1
+            className="font-bold my-3"
+            style={{
+              color: theme.colors.textPrimary,
+              fontSize: "40px",
+              letterSpacing: "-1.68px",
+              margin: "16px 0",
+            }}
+          >
+            Exams & Results
+          </h1>
 
-            <p
-                className="text-xs md:text-sm mt-1"
-                style={{ color: theme.colors.textSecondary }}
-            >
-                Manage exam schedules, definitions, and track student performance.
-            </p>
+          <p
+            className="text-xs md:text-sm mt-1"
+            style={{ color: theme.colors.textSecondary }}
+          >
+            Manage exam schedules, definitions, and track student performance.
+          </p>
         </div>
 
         <div className="flex flex-wrap gap-3 items-center">
@@ -233,6 +232,7 @@ const ExamsResults = () => {
           </select>
 
           <button
+            onClick={() => setOpenModal(true)}
             className="text-white rounded-xl px-4 py-2 flex items-center gap-2 text-sm font-medium"
             style={{ backgroundColor: theme.colors.primary }}
           >
@@ -341,6 +341,11 @@ const ExamsResults = () => {
           </ResponsiveContainer>
         </div>
       </div>
+      <AddExamModal
+        open={openModal}
+        onClose={() => setOpenModal(false)}
+        onAdd={handleAddExam}
+      />
     </div>
   );
 };

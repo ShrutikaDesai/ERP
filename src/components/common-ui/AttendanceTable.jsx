@@ -26,7 +26,7 @@ const AttendanceTable = ({ data }) => {
   // filter
   const filteredData = useMemo(() => {
     return data.filter((item) =>
-      item.student.toLowerCase().includes(search.toLowerCase())
+      item.student.toLowerCase().includes(search.toLowerCase()),
     );
   }, [search, data]);
 
@@ -45,13 +45,8 @@ const AttendanceTable = ({ data }) => {
         header: "Student",
         cell: ({ row }) => (
           <div>
-            <p className="font-semibold">
-              {row.original.student}
-            </p>
-            <p
-              className="text-xs"
-              style={{ color: theme.colors.textMuted }}
-            >
+            <p className="font-semibold">{row.original.student}</p>
+            <p className="text-xs" style={{ color: theme.colors.textMuted }}>
               {row.original.email}
             </p>
           </div>
@@ -63,9 +58,7 @@ const AttendanceTable = ({ data }) => {
         cell: ({ row }) => (
           <div>
             <p>{row.original.id}</p>
-            <p className="text-xs text-gray-400">
-              Roll: {row.original.roll}
-            </p>
+            <p className="text-xs text-gray-400">Roll: {row.original.roll}</p>
           </div>
         ),
       },
@@ -89,9 +82,7 @@ const AttendanceTable = ({ data }) => {
 
               <button
                 className={`w-8 h-8 rounded border text-xs ${
-                  status === "Absent"
-                    ? "bg-red-100 text-red-600"
-                    : "bg-gray-50"
+                  status === "Absent" ? "bg-red-100 text-red-600" : "bg-gray-50"
                 }`}
               >
                 A
@@ -124,7 +115,7 @@ const AttendanceTable = ({ data }) => {
         ),
       },
     ],
-    []
+    [],
   );
 
   const table = useReactTable({
@@ -145,16 +136,11 @@ const AttendanceTable = ({ data }) => {
     >
       {/* HEADER */}
       <div className="flex justify-between mb-4">
-        <h2 className="text-lg font-semibold">
-          Student Attendance
-        </h2>
+        <h2 className="text-lg font-semibold">Student Attendance</h2>
 
         <div className="flex gap-3">
           <div className="relative">
-            <Search
-              className="absolute left-2 top-2 text-gray-400"
-              size={16}
-            />
+            <Search className="absolute left-2 top-2 text-gray-400" size={16} />
             <input
               className="border pl-8 pr-3 py-1 rounded text-sm"
               placeholder="Search student..."
@@ -177,10 +163,7 @@ const AttendanceTable = ({ data }) => {
             <TableRow key={hg.id}>
               {hg.headers.map((h) => (
                 <TableHead key={h.id}>
-                  {flexRender(
-                    h.column.columnDef.header,
-                    h.getContext()
-                  )}
+                  {flexRender(h.column.columnDef.header, h.getContext())}
                 </TableHead>
               ))}
             </TableRow>
@@ -192,10 +175,7 @@ const AttendanceTable = ({ data }) => {
             <TableRow key={row.id}>
               {row.getVisibleCells().map((cell) => (
                 <TableCell key={cell.id}>
-                  {flexRender(
-                    cell.column.columnDef.cell,
-                    cell.getContext()
-                  )}
+                  {flexRender(cell.column.columnDef.cell, cell.getContext())}
                 </TableCell>
               ))}
             </TableRow>
@@ -218,9 +198,7 @@ const AttendanceTable = ({ data }) => {
           </button>
 
           <button
-            onClick={() =>
-              setPage((p) => Math.min(p + 1, totalPages))
-            }
+            onClick={() => setPage((p) => Math.min(p + 1, totalPages))}
             className="border px-3 py-1 rounded"
           >
             Next
