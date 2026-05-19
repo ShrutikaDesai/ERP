@@ -97,8 +97,8 @@ const Classes = () => {
   const [selectedClass, setSelectedClass] = useState(null);
   const [modalMode, setModalMode] = useState("add");
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
-const [deleteItem, setDeleteItem] = useState(null);
-const [statusFilter, setStatusFilter] = useState("");
+  const [deleteItem, setDeleteItem] = useState(null);
+  const [statusFilter, setStatusFilter] = useState("");
 
   const [classes, setClasses] = useState([
     {
@@ -150,88 +150,88 @@ const [statusFilter, setStatusFilter] = useState("");
     },
   ]);
 
-const filteredData = useMemo(() => {
-  return classes.filter((item) => {
-    const matchesSearch =
-      item.className
-        .toLowerCase()
-        .includes(search.toLowerCase());
+  const filteredData = useMemo(() => {
+    return classes.filter((item) => {
+      const matchesSearch =
+        item.className
+          .toLowerCase()
+          .includes(search.toLowerCase());
 
-    const matchesStatus =
-      statusFilter === ""
-        ? true
-        : item.status === statusFilter;
+      const matchesStatus =
+        statusFilter === ""
+          ? true
+          : item.status === statusFilter;
 
-    return matchesSearch && matchesStatus;
-  });
-}, [search, statusFilter, classes]);
+      return matchesSearch && matchesStatus;
+    });
+  }, [search, statusFilter, classes]);
 
 
-const exportToExcel = () => {
-  const now = new Date(),
-    formattedDate = now.toLocaleDateString("en-IN"),
-    formattedTime = now.toLocaleTimeString("en-IN"),
-    excelData = classes.map((item) => ({
-      "Sr No": item.srNo,
-      "Class Name": item.className,
-      Sections: item.sections.join(", "),
-      "Section Count": item.sectionCount,
-      "Student Count": item.students,
-      Capacity: item.capacity,
-      Coordinator: item.teacher,
-      Status: item.status,
-    })),
-    worksheet = XLSX.utils.json_to_sheet([]);
+  const exportToExcel = () => {
+    const now = new Date(),
+      formattedDate = now.toLocaleDateString("en-IN"),
+      formattedTime = now.toLocaleTimeString("en-IN"),
+      excelData = classes.map((item) => ({
+        "Sr No": item.srNo,
+        "Class Name": item.className,
+        Sections: item.sections.join(", "),
+        "Section Count": item.sectionCount,
+        "Student Count": item.students,
+        Capacity: item.capacity,
+        Coordinator: item.teacher,
+        Status: item.status,
+      })),
+      worksheet = XLSX.utils.json_to_sheet([]);
 
-  XLSX.utils.sheet_add_aoa(
-    worksheet,
-    [
-      ["Class Management Report"],
-      [`Export Date: ${formattedDate}`],
-      [`Export Time: ${formattedTime}`],
-      [],
-    ],
-    { origin: "A1" }
-  );
+    XLSX.utils.sheet_add_aoa(
+      worksheet,
+      [
+        ["Class Management Report"],
+        [`Export Date: ${formattedDate}`],
+        [`Export Time: ${formattedTime}`],
+        [],
+      ],
+      { origin: "A1" }
+    );
 
-  XLSX.utils.sheet_add_json(worksheet, excelData, {
-    origin: "A5",
-    skipHeader: false,
-  });
+    XLSX.utils.sheet_add_json(worksheet, excelData, {
+      origin: "A5",
+      skipHeader: false,
+    });
 
-  worksheet["!cols"] = [
-    { wch: 10 },
-    { wch: 25 },
-    { wch: 20 },
-    { wch: 18 },
-    { wch: 18 },
-    { wch: 15 },
-    { wch: 25 },
-    { wch: 15 },
-  ];
+    worksheet["!cols"] = [
+      { wch: 10 },
+      { wch: 25 },
+      { wch: 20 },
+      { wch: 18 },
+      { wch: 18 },
+      { wch: 15 },
+      { wch: 25 },
+      { wch: 15 },
+    ];
 
-  const workbook = XLSX.utils.book_new();
+    const workbook = XLSX.utils.book_new();
 
-  XLSX.utils.book_append_sheet(
-    workbook,
-    worksheet,
-    "Classes"
-  );
+    XLSX.utils.book_append_sheet(
+      workbook,
+      worksheet,
+      "Classes"
+    );
 
-  const excelBuffer = XLSX.write(workbook, {
+    const excelBuffer = XLSX.write(workbook, {
       bookType: "xlsx",
       type: "array",
     }),
-    fileData = new Blob([excelBuffer], {
-      type:
-        "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8",
-    });
+      fileData = new Blob([excelBuffer], {
+        type:
+          "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8",
+      });
 
-  saveAs(
-    fileData,
-    `Classes_Report_${formattedDate}.xlsx`
-  );
-};
+    saveAs(
+      fileData,
+      `Classes_Report_${formattedDate}.xlsx`
+    );
+  };
 
   const columns = [
     {
@@ -392,21 +392,21 @@ const exportToExcel = () => {
                   Edit
                 </button>
 
-               {/* Delete */}
-<button
-  onClick={() => {
-    setDeleteItem(row.original);
-    setDeleteModalOpen(true);
-    setOpenAction(null);
-  }}
-  className="w-full flex items-center gap-3 px-4 py-3 text-sm transition-all hover:bg-red-50"
-  style={{
-    color: theme.colors.danger,
-  }}
->
-  <Trash2 size={16} />
-  Delete
-</button>
+                {/* Delete */}
+                <button
+                  onClick={() => {
+                    setDeleteItem(row.original);
+                    setDeleteModalOpen(true);
+                    setOpenAction(null);
+                  }}
+                  className="w-full flex items-center gap-3 px-4 py-3 text-sm transition-all hover:bg-red-50"
+                  style={{
+                    color: theme.colors.danger,
+                  }}
+                >
+                  <Trash2 size={16} />
+                  Delete
+                </button>
               </div>
             )}
           </div>
@@ -446,7 +446,7 @@ const exportToExcel = () => {
       {/* ───────────────────────── HEADER ───────────────────────── */}
       {/* Header */}
       <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-4 mb-6">
-        <div className="flex flex-col gap-2">
+        <div className="text-3xl font-bold">
           <h1
             style={{
               fontSize: "1.7rem",
@@ -470,18 +470,18 @@ const exportToExcel = () => {
         </div>
 
         <div className="flex flex-wrap gap-2">
-         <button
-  onClick={exportToExcel}
-  className="flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-medium"
-  style={{
-    background: theme.colors.surface,
-    border: `1px solid ${theme.colors.border}`,
-    color: theme.colors.textPrimary,
-  }}
->
-  <Download size={16} />
-  Export
-</button>
+          <button
+            onClick={exportToExcel}
+            className="flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-medium"
+            style={{
+              background: theme.colors.surface,
+              border: `1px solid ${theme.colors.border}`,
+              color: theme.colors.textPrimary,
+            }}
+          >
+            <Download size={16} />
+            Export
+          </button>
 
           <button
             onClick={() => {
@@ -536,88 +536,88 @@ const exportToExcel = () => {
           boxShadow: theme.shadow.card,
         }}
       >
-    
-      {/* ───────────────────── TABLE HEADER ───────────────────── */}
-<div
-  className="p-5 flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4"
-  style={{
-    borderBottom: `1px solid ${theme.colors.tableBorder}`,
-  }}
->
-  {/* Left Side */}
-  <div className="flex flex-col sm:flex-row gap-3 w-full lg:w-auto">
-    
-    {/* Search */}
-    <div className="relative w-full sm:w-80">
-      <Search
-        className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4"
-        color={theme.colors.textMuted}
-      />
 
-      <Input
-        placeholder="Search classes..."
-        value={search}
-        onChange={(e) =>
-          setSearch(e.target.value)
-        }
-        className="pl-10 rounded-2xl h-11 border-0 focus-visible:ring-0"
-        style={{
-          background: theme.colors.background,
-          color: theme.colors.textPrimary,
-        }}
-      />
-    </div>
+        {/* ───────────────────── TABLE HEADER ───────────────────── */}
+        <div
+          className="p-5 flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4"
+          style={{
+            borderBottom: `1px solid ${theme.colors.tableBorder}`,
+          }}
+        >
+          {/* Left Side */}
+          <div className="flex flex-col sm:flex-row gap-3 w-full lg:w-auto">
 
-<div className="relative min-w-[180px]">
-  <select
-    value={statusFilter}
-    onChange={(e) =>
-      setStatusFilter(e.target.value)
-    }
-    className="w-full h-11 pl-4 pr-16 rounded-2xl text-sm font-medium appearance-none cursor-pointer transition-all"
-    style={{
-      background: theme.colors.cardBg,
-      border: `1px solid ${theme.colors.border}`,
-      color: theme.colors.textPrimary,
-      boxShadow: theme.shadow.card,
-    }}
-  >
-    <option value="" disabled>
-      Filter by Status
-    </option>
+            {/* Search */}
+            <div className="relative w-full sm:w-80">
+              <Search
+                className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4"
+                color={theme.colors.textMuted}
+              />
 
-    <option value="Active">
-      Active
-    </option>
+              <Input
+                placeholder="Search classes..."
+                value={search}
+                onChange={(e) =>
+                  setSearch(e.target.value)
+                }
+                className="pl-10 rounded-2xl h-11 border-0 focus-visible:ring-0"
+                style={{
+                  background: theme.colors.background,
+                  color: theme.colors.textPrimary,
+                }}
+              />
+            </div>
 
-    <option value="Inactive">
-      Inactive
-    </option>
-  </select>
+            <div className="relative min-w-[180px]">
+              <select
+                value={statusFilter}
+                onChange={(e) =>
+                  setStatusFilter(e.target.value)
+                }
+                className="w-full h-11 pl-4 pr-16 rounded-2xl text-sm font-medium appearance-none cursor-pointer transition-all"
+                style={{
+                  background: theme.colors.cardBg,
+                  border: `1px solid ${theme.colors.border}`,
+                  color: theme.colors.textPrimary,
+                  boxShadow: theme.shadow.card,
+                }}
+              >
+                <option value="" disabled>
+                  Filter by Status
+                </option>
 
-  {/* Clear Button */}
-  {statusFilter && (
-    <button
-      onClick={() => setStatusFilter("")}
-      className="absolute right-9 top-1/2 -translate-y-1/2"
-    >
-      <X
-        size={15}
-        color={theme.colors.textMuted}
-      />
-    </button>
-  )}
+                <option value="Active">
+                  Active
+                </option>
 
-  {/* Custom Arrow */}
-  <div className="absolute inset-y-0 right-4 flex items-center pointer-events-none">
-    <ChevronRight
-      className="w-4 h-4 rotate-90"
-      color={theme.colors.textMuted}
-    />
-  </div>
-</div>
-  </div>
-</div>
+                <option value="Inactive">
+                  Inactive
+                </option>
+              </select>
+
+              {/* Clear Button */}
+              {statusFilter && (
+                <button
+                  onClick={() => setStatusFilter("")}
+                  className="absolute right-9 top-1/2 -translate-y-1/2"
+                >
+                  <X
+                    size={15}
+                    color={theme.colors.textMuted}
+                  />
+                </button>
+              )}
+
+              {/* Custom Arrow */}
+              <div className="absolute inset-y-0 right-4 flex items-center pointer-events-none">
+                <ChevronRight
+                  className="w-4 h-4 rotate-90"
+                  color={theme.colors.textMuted}
+                />
+              </div>
+            </div>
+          </div>
+        </div>
 
         {/* ───────────────────── TABLE ───────────────────── */}
         <div className="overflow-x-auto">
@@ -769,103 +769,103 @@ const exportToExcel = () => {
 
 
       {/* ───────────────── DELETE CONFIRM MODAL ───────────────── */}
-{deleteModalOpen && (
-  <>
-    {/* Overlay */}
-    <div
-      className="fixed inset-0 z-40"
-      style={{
-        background: theme.colors.drawerOverlay,
-      }}
-      onClick={() => {
-        setDeleteModalOpen(false);
-        setDeleteItem(null);
-      }}
-    />
-
-    {/* Modal */}
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-      <div
-        className="w-full max-w-md rounded-3xl overflow-hidden"
-        style={{
-          background: theme.colors.cardBg,
-          boxShadow: theme.shadow.modal,
-        }}
-      >
-        {/* Header */}
-        <div
-          className="px-6 py-5"
-          style={{
-            borderBottom: `1px solid ${theme.colors.border}`,
-          }}
-        >
-          <h2
-            className="text-xl font-bold"
+      {deleteModalOpen && (
+        <>
+          {/* Overlay */}
+          <div
+            className="fixed inset-0 z-40"
             style={{
-              color: theme.colors.textPrimary,
+              background: theme.colors.drawerOverlay,
             }}
-          >
-            Delete Class
-          </h2>
-
-         <p
-  className="text-sm mt-2"
-  style={{
-    color: theme.colors.textSecondary,
-  }}
->
-  Are you sure you want to delete{" "}
-  <span
-    style={{
-      fontWeight: 600,
-      color: theme.colors.textPrimary,
-    }}
-  >
-    {deleteItem?.className}
-  </span>{" "}
-  class?
-</p>
-        </div>
-
-        {/* Footer */}
-        <div className="flex justify-end gap-3 px-6 py-5">
-          <button
             onClick={() => {
               setDeleteModalOpen(false);
               setDeleteItem(null);
             }}
-            className="px-5 h-11 rounded-2xl text-sm font-medium"
-            style={{
-              border: `1px solid ${theme.colors.border}`,
-              color: theme.colors.textPrimary,
-            }}
-          >
-            Cancel
-          </button>
+          />
 
-          <button
-            onClick={() => {
-              setClasses((prev) =>
-                prev.filter(
-                  (item) => item.id !== deleteItem.id
-                )
-              );
+          {/* Modal */}
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+            <div
+              className="w-full max-w-md rounded-3xl overflow-hidden"
+              style={{
+                background: theme.colors.cardBg,
+                boxShadow: theme.shadow.modal,
+              }}
+            >
+              {/* Header */}
+              <div
+                className="px-6 py-5"
+                style={{
+                  borderBottom: `1px solid ${theme.colors.border}`,
+                }}
+              >
+                <h2
+                  className="text-xl font-bold"
+                  style={{
+                    color: theme.colors.textPrimary,
+                  }}
+                >
+                  Delete Class
+                </h2>
 
-              setDeleteModalOpen(false);
-              setDeleteItem(null);
-            }}
-            className="px-5 h-11 rounded-2xl text-sm font-semibold text-white"
-            style={{
-              background: theme.colors.danger,
-            }}
-          >
-            Delete
-          </button>
-        </div>
-      </div>
-    </div>
-  </>
-)}
+                <p
+                  className="text-sm mt-2"
+                  style={{
+                    color: theme.colors.textSecondary,
+                  }}
+                >
+                  Are you sure you want to delete{" "}
+                  <span
+                    style={{
+                      fontWeight: 600,
+                      color: theme.colors.textPrimary,
+                    }}
+                  >
+                    {deleteItem?.className}
+                  </span>{" "}
+                  class?
+                </p>
+              </div>
+
+              {/* Footer */}
+              <div className="flex justify-end gap-3 px-6 py-5">
+                <button
+                  onClick={() => {
+                    setDeleteModalOpen(false);
+                    setDeleteItem(null);
+                  }}
+                  className="px-5 h-11 rounded-2xl text-sm font-medium"
+                  style={{
+                    border: `1px solid ${theme.colors.border}`,
+                    color: theme.colors.textPrimary,
+                  }}
+                >
+                  Cancel
+                </button>
+
+                <button
+                  onClick={() => {
+                    setClasses((prev) =>
+                      prev.filter(
+                        (item) => item.id !== deleteItem.id
+                      )
+                    );
+
+                    setDeleteModalOpen(false);
+                    setDeleteItem(null);
+                  }}
+                  className="px-5 h-11 rounded-2xl text-sm font-semibold text-white"
+                  style={{
+                    background: theme.colors.danger,
+                  }}
+                >
+                  Delete
+                </button>
+              </div>
+            </div>
+          </div>
+        </>
+      )}
     </div>
   );
 };

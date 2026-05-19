@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Outlet, useNavigate, useLocation } from "react-router-dom";
 
 import {
@@ -114,6 +114,30 @@ const AdminLayout = () => {
 
   const [profileOpen, setProfileOpen] =
     useState(false);
+  const [viewportWidth, setViewportWidth] =
+    useState(window.innerWidth);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setViewportWidth(window.innerWidth);
+    };
+
+    window.addEventListener(
+      "resize",
+      handleResize
+    );
+
+    return () =>
+      window.removeEventListener(
+        "resize",
+        handleResize
+      );
+  }, []);
+
+  const isDesktop =
+    viewportWidth >= 1024;
+  const isMobile =
+    viewportWidth < 768;
 
 
   return (
@@ -366,10 +390,13 @@ const AdminLayout = () => {
       <div
         className="flex-1 flex flex-col overflow-hidden transition-all duration-300"
         style={{
-          marginLeft:
-            window.innerWidth >= 1024
-              ? theme.layout.sidebarWidth
-              : 0,
+          marginLeft: isDesktop
+            ? theme.layout.sidebarWidth
+            : 0,
+          width: isDesktop
+            ? `calc(100% - ${theme.layout.sidebarWidth})`
+            : "100%",
+          minWidth: 0,
         }}
       >
         {/* HEADER */}
@@ -563,10 +590,10 @@ const AdminLayout = () => {
         <main
           className="flex-1 overflow-y-auto"
           style={{
-            padding:
-              window.innerWidth < 768
-                ? "16px"
-                : theme.layout.contentPadding,
+            padding: isMobile
+              ? "16px"
+              : theme.layout.contentPadding,
+            minWidth: 0,
           }}
         >
           <Outlet />

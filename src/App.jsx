@@ -20,6 +20,8 @@ import ViewStudentDetails from "./components/admin/students/ViewStudentDetails";
 import AddStudent from "./components/admin/students/AddStudent";
 import MarkAttendancePage from "./components/admin/attendance/MarkAttendancePage";
 import AttendanceReportPage from "./components/admin/attendance/AttendanceReportPage";
+import ReviewAdmission from "./components/admin/students/Reviewadmission";
+import CampusSelection from "./components/admin/CampusSelection";
 
 function App() {
   return (
@@ -32,6 +34,7 @@ function App() {
         {/* Auth Routes */}
         <Route path="/login" element={<AdminLogin />} />
         <Route path="/signup" element={<AdminSignup />} />
+        <Route path="/campus-selection" element={<CampusSelection />} />
 
         {/* Admin Routes */}
         <Route path="/s-admin" element={<AdminLayout />}>
@@ -41,6 +44,7 @@ function App() {
           <Route path="dashboard" element={<Dashboard />} />
           <Route path="students" element={<StudentList />} />
           <Route path="add-student" element={<AddStudent />} />
+          <Route path="review-admission" element={<ReviewAdmission />} />
            <Route path="student-details/:id" element={<ViewStudentDetails />} />
           <Route path="classes" element={<Classes />} />
           <Route path="sections" element={<Sections />} />

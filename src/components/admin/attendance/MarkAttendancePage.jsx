@@ -288,18 +288,19 @@ const [selectedDate, setSelectedDate] = useState("");
       style={{
         backgroundColor: theme.colors.background,
         fontFamily: theme.typography.fontFamily,
+          padding: theme.layout.contentPadding,
       }}
     >
       {/* Header */}
       <div className="mb-6">
-        <h1
+        <h3
           className="text-3xl font-bold"
           style={{
             color: theme.colors.textPrimary,
           }}
         >
           Mark Attendance
-        </h1>
+        </h3>
 
         <p
           className="mt-1 text-sm"

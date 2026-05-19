@@ -193,17 +193,14 @@ const ExamsResults = () => {
     >
       <div className="flex flex-col lg:flex-row justify-between lg:items-center gap-4 mb-8">
         <div>
-          <h1
-            className="font-bold my-3"
+          <h3
+            className="text-3xl font-bold"
             style={{
               color: theme.colors.textPrimary,
-              fontSize: "40px",
-              letterSpacing: "-1.68px",
-              margin: "16px 0",
-            }}
+                         }}
           >
             Exams & Results
-          </h1>
+          </h3>
 
           <p
             className="text-xs md:text-sm mt-1"
