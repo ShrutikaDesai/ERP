@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { theme } from "../../theme/theme";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 const AdminLogin = () => {
     const navigate = useNavigate();
@@ -221,19 +221,19 @@ const AdminLogin = () => {
                             />
                             <span style={{ fontSize: "0.875rem", color: theme.colors.textSecondary }}>Remember me</span>
                         </label>
-                        <a
-                            href="#"
+                        <Link
+                            to="/forgot-password"
                             style={{
                                 fontSize: "0.875rem",
                                 color: theme.colors.primary,
                                 fontWeight: "500",
                                 textDecoration: "none",
                             }}
-                            onMouseEnter={(e) => (e.target.style.color = theme.colors.primaryHover)}
-                            onMouseLeave={(e) => (e.target.style.color = theme.colors.primary)}
+                            onMouseEnter={(e) => (e.currentTarget.style.color = theme.colors.primaryHover)}
+                            onMouseLeave={(e) => (e.currentTarget.style.color = theme.colors.primary)}
                         >
                             Forgot password?
-                        </a>
+                        </Link>
                     </div>
 
                     {/* Sign In Button */}

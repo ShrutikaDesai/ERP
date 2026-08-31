@@ -4,6 +4,7 @@ export const theme = {
     primary: "#E16D6D",
     primaryHover: "#d45858",
 
+
     // Backgrounds
     background: "#F5F6FA",
     surface: "#FFFFFF",
@@ -14,6 +15,7 @@ export const theme = {
     textPrimary: "#1F2937",
     textSecondary: "#6B7280",
     textMuted: "#9CA3AF",
+    
 
     // Border
     border: "#E5E7EB",

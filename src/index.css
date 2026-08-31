@@ -137,20 +137,24 @@ h1 {
   font-size: 56px;
   letter-spacing: -1.68px;
   margin: 32px 0;
+
   @media (max-width: 1024px) {
     font-size: 36px;
     margin: 20px 0;
   }
 }
+
 h2 {
   font-size: 24px;
   line-height: 118%;
   letter-spacing: -0.24px;
   margin: 0 0 8px;
+
   @media (max-width: 1024px) {
     font-size: 20px;
   }
 }
+
 p {
   margin: 0;
 }
@@ -169,14 +173,43 @@ code {
   padding: 4px 8px;
   background: var(--code-bg);
 }
+
 /* Hide scrollbar but keep scrolling */
 .hide-scrollbar {
-  scrollbar-width: none;       /* Firefox */
-  -ms-overflow-style: none;    /* IE 10+ */
+  scrollbar-width: none;
+  /* Firefox */
+  -ms-overflow-style: none;
+  /* IE 10+ */
 }
 
 .hide-scrollbar::-webkit-scrollbar {
-  display: none;               /* Chrome, Safari */
+  display: none;
+  /* Chrome, Safari */
+}
+
+.custom-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(13, 13, 13, 0.8) rgba(156, 163, 175, 0.18);
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: rgba(156, 163, 175, 0.12);
+  border-radius: 9999px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(14, 14, 15, 0.85);
+  border-radius: 9999px;
+  border: 2px solid rgba(255, 255, 255, 0.95);
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: rgba(10, 10, 10, 0.95);
 }
 
 @theme inline {
@@ -258,8 +291,14 @@ code {
 
 @layer base {
   * {
-    @apply border-border outline-ring/50;}
+    @apply border-border outline-ring/50;
+  }
+
   body {
-    @apply bg-background text-foreground;}
+    @apply bg-background text-foreground;
+  }
+
   html {
-    @apply font-sans;}}
+    @apply font-sans;
+  }
+}

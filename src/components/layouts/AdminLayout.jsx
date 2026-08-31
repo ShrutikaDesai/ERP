@@ -21,10 +21,12 @@ import {
   UserPlus,
   BookMarkedIcon,
   RepeatOff,
+  Upload,
 } from "lucide-react";
 
 import { theme } from "@/theme/theme";
-
+import { BreadcrumbProvider } from "../admin/BreadcrumbContext";
+import Breadcrumbs from "../admin/Breadcrumbs";
 const menuItems = [
   {
     title: "Dashboard",
@@ -44,6 +46,11 @@ const menuItems = [
         title: "Add Student",
         icon: UserPlus,
         path: "/s-admin/add-student",
+      },
+      {
+        title: "Bulk Import Students",
+        icon: Upload,
+        path: "/s-admin/bulk-import-students",
       },
     ],
   },
@@ -69,37 +76,32 @@ const menuItems = [
     icon: BadgeDollarSign,
     path: "/s-admin/fees",
   },
-  // {
-  //   title: "Attendance",
-  //   icon: CalendarCheck,
-  //   path: "/s-admin/attendance",
-  // },
   {
-  title: "Attendance",
-  icon: CalendarCheck,
-  children: [
-    {
-      title: "Mark Attendance",
-      icon: BookMarkedIcon,
-      path: "/s-admin/mark-attendance",
-    },
-    {
-      title: "Attendance Reports",
-      icon: RepeatOff,
-      path: "/s-admin/attendance-reports",
-    },
-  ],
-},
+    title: "Attendance",
+    icon: CalendarCheck,
+    children: [
+      {
+        title: "Mark Attendance",
+        icon: BookMarkedIcon,
+        path: "/s-admin/mark-attendance",
+      },
+      {
+        title: "Attendance Reports",
+        icon: RepeatOff,
+        path: "/s-admin/attendance-reports",
+      },
+    ],
+  },
   {
     title: "Exams",
     icon: FileText,
     path: "/s-admin/exams",
   },
-  {
-    title: "Communication",
-    icon: MessageSquare,
-    path: "/s-admin/communication",
-  },
+  // {
+  //   title: "Communication",
+  //   icon: MessageSquare,
+  //   path: "/s-admin/communication",
+  // },
 ];
 
 const AdminLayout = () => {
@@ -399,205 +401,217 @@ const AdminLayout = () => {
           minWidth: 0,
         }}
       >
-        {/* HEADER */}
-        <header
-          className="
-            flex-shrink-0
-            px-4 md:px-6
-            flex items-center justify-between
-            gap-4
-          "
-          style={{
-            height: theme.layout.navbarHeight,
-            background: theme.colors.navbar,
-            borderBottom: `1px solid ${theme.colors.border}`,
-          }}
-        >
-          {/* LEFT */}
-          <div className="flex items-center gap-3">
-            <button
-              className="lg:hidden"
-              onClick={() => setSidebarOpen(true)}
-            >
-              <Menu size={24} />
-            </button>
+        <BreadcrumbProvider>
+          {/* HEADER */}
+          <header
+            className="
+              flex-shrink-0
+              px-4 md:px-6
+              flex items-center justify-between
+              gap-4
+            "
+            style={{
+              minHeight: theme.layout.navbarHeight,
+              background: theme.colors.navbar,
+              borderBottom: `1px solid ${theme.colors.border}`,
+            }}
+          >
+            {/* LEFT */}
+            <div className="flex items-center gap-3 flex-1 min-w-0">
+              <div className="flex items-center gap-3 min-w-0">
+                <button
+                  className="lg:hidden"
+                  onClick={() => setSidebarOpen(true)}
+                >
+                  <Menu size={24} />
+                </button>
 
-            <button
-              className="
-                h-11
-                px-3 md:px-4
-                rounded-xl
-                flex items-center gap-3
-              "
-              style={{
-                border: `1px solid ${theme.colors.border}`,
-                background: theme.colors.surface,
-              }}
-            >
-              <div
-                className="
-                  w-8 h-8
-                  rounded-lg
-                  flex items-center justify-center
-                  text-xs font-bold text-white
-                "
-                style={{
-                  background: theme.colors.textPrimary,
-                }}
-              >
-                DYP
+                <button
+                  className="
+                    h-11
+                    px-3 md:px-4
+                    rounded-xl
+                    flex items-center gap-3
+                    min-w-[220px]
+                  "
+                  style={{
+                    border: `1px solid ${theme.colors.border}`,
+                    background: theme.colors.surface,
+                  }}
+                >
+                  <div
+                    className="
+                      w-8 h-8
+                      rounded-lg
+                      flex items-center justify-center
+                      text-xs font-bold text-white
+                    "
+                    style={{
+                      background: theme.colors.textPrimary,
+                    }}
+                  >
+                    DYP
+                  </div>
+
+                  <span
+                    className="
+                      text-sm font-medium
+                      hidden sm:block
+                    "
+                    style={{
+                      color: theme.colors.textPrimary,
+                    }}
+                  >
+                    DYP Campus
+                  </span>
+
+                  <ChevronDown size={16} />
+                </button>
               </div>
 
-              <span
-                className="
-                  text-sm font-medium
-                  hidden sm:block
-                "
-                style={{
-                  color: theme.colors.textPrimary,
-                }}
-              >
-                DYP Campus
-              </span>
+              {/* <div className="flex-1 min-w-0">
+                <Breadcrumbs inline />
+              </div> */}
+            </div>
 
-              <ChevronDown size={16} />
-            </button>
-          </div>
-
-          {/* RIGHT */}
-          <div className="flex items-center gap-3">
-            <button
-              className="
-                relative
-                w-11 h-11
-                rounded-xl
-                flex items-center justify-center
-              "
-              style={{
-                border: `1px solid ${theme.colors.border}`,
-                background: theme.colors.surface,
-              }}
-            >
-              <Bell size={18} />
-
-              <span className="absolute top-2 right-2 w-2 h-2 rounded-full bg-red-500" />
-            </button>
-
-            {/* PROFILE */}
-            <div className="relative">
+            {/* RIGHT */}
+            <div className="flex items-center gap-3">
               <button
-                onClick={() =>
-                  setProfileOpen(!profileOpen)
-                }
                 className="
-                  h-11
-                  px-2 md:px-3
+                  relative
+                  w-11 h-11
                   rounded-xl
-                  flex items-center gap-3
+                  flex items-center justify-center
                 "
                 style={{
                   border: `1px solid ${theme.colors.border}`,
                   background: theme.colors.surface,
                 }}
               >
-                <img
-                  src="https://i.pravatar.cc/100"
-                  alt="profile"
-                  className="w-8 h-8 rounded-lg object-cover"
-                />
+                <Bell size={18} />
 
-                <div className="hidden md:block text-left">
-                  <p
-                    className="text-sm font-medium leading-none"
-                    style={{
-                      color:
-                        theme.colors.textPrimary,
-                    }}
-                  >
-                    Admin
-                  </p>
-
-                  <span
-                    className="text-xs"
-                    style={{
-                      color:
-                        theme.colors.textMuted,
-                    }}
-                  >
-                    Administrator
-                  </span>
-                </div>
-
-                <ChevronDown size={16} />
+                <span className="absolute top-2 right-2 w-2 h-2 rounded-full bg-red-500" />
               </button>
 
-              {profileOpen && (
-                <div
+              {/* PROFILE */}
+              <div className="relative">
+                <button
+                  onClick={() =>
+                    setProfileOpen(!profileOpen)
+                  }
                   className="
-                    absolute
-                    right-0
-                    top-14
-                    w-56
+                    h-11
+                    px-2 md:px-3
                     rounded-xl
-                    overflow-hidden
-                    z-50
+                    flex items-center gap-3
                   "
                   style={{
-                    background:
-                      theme.colors.surface,
                     border: `1px solid ${theme.colors.border}`,
-                    boxShadow: theme.shadow.modal,
+                    background: theme.colors.surface,
                   }}
                 >
-                  <button
-                    className="w-full flex items-center gap-3 px-4 py-3 text-sm"
-                    onClick={() => {
-                      navigate("/s-admin/profile");
-                      setProfileOpen(false);
-                    }}
-                  >
-                    <User size={18} />
-                    My Profile
-                  </button>
+                  <img
+                    src="https://i.pravatar.cc/100"
+                    alt="profile"
+                    className="w-8 h-8 rounded-lg object-cover"
+                  />
 
-                  <button
-                    className="w-full flex items-center gap-3 px-4 py-3 text-sm"
-                    onClick={() => {
-                      navigate("/s-admin/settings");
-                      setProfileOpen(false);
-                    }}
-                  >
-                    <Settings size={18} />
-                    Settings
-                  </button>
+                  <div className="hidden md:block text-left">
+                    <p
+                      className="text-sm font-medium leading-none"
+                      style={{
+                        color:
+                          theme.colors.textPrimary,
+                      }}
+                    >
+                      Admin
+                    </p>
 
-                  <button
-                    className="w-full flex items-center gap-3 px-4 py-3 text-sm text-red-500"
-                    onClick={() => {
-                      navigate("/login");
+                    <span
+                      className="text-xs"
+                      style={{
+                        color:
+                          theme.colors.textMuted,
+                      }}
+                    >
+                      Administrator
+                    </span>
+                  </div>
+
+                  <ChevronDown size={16} />
+                </button>
+
+                {profileOpen && (
+                  <div
+                    className="
+                      absolute
+                      right-0
+                      top-14
+                      w-56
+                      rounded-xl
+                      overflow-hidden
+                      z-50
+                    "
+                    style={{
+                      background:
+                        theme.colors.surface,
+                      border: `1px solid ${theme.colors.border}`,
+                      boxShadow: theme.shadow.modal,
                     }}
                   >
-                    <LogOut size={18} />
-                    Logout
-                  </button>
-                </div>
-              )}
+                    <button
+                      className="w-full flex items-center gap-3 px-4 py-3 text-sm"
+                      onClick={() => {
+                        navigate("/s-admin/profile");
+                        setProfileOpen(false);
+                      }}
+                    >
+                      <User size={18} />
+                      My Profile
+                    </button>
+
+                    <button
+                      className="w-full flex items-center gap-3 px-4 py-3 text-sm"
+                      onClick={() => {
+                        navigate("/s-admin/settings");
+                        setProfileOpen(false);
+                      }}
+                    >
+                      <Settings size={18} />
+                      Settings
+                    </button>
+
+                    <button
+                      className="w-full flex items-center gap-3 px-4 py-3 text-sm text-red-500"
+                      onClick={() => {
+                        navigate("/login");
+                      }}
+                    >
+                      <LogOut size={18} />
+                      Logout
+                    </button>
+                  </div>
+                )}
+              </div>
             </div>
-          </div>
-        </header>
+          </header>
 
-        {/* SCROLLABLE CONTENT */}
-        <main
-          className="flex-1 overflow-y-auto"
-          style={{
-            padding: isMobile
-              ? "16px"
-              : theme.layout.contentPadding,
-            minWidth: 0,
-          }}
-        >
-          <Outlet />
-        </main>
+          {/* BREADCRUMBS */}
+          <Breadcrumbs />
+
+          {/* SCROLLABLE CONTENT */}
+          <main
+            className="flex-1 overflow-y-auto custom-scrollbar"
+            style={{
+              padding: isMobile
+                ? "16px"
+                : theme.layout.contentPadding,
+              minWidth: 0,
+            }}
+          >
+            <Outlet />
+          </main>
+        </BreadcrumbProvider>
       </div>
     </div>
   );
