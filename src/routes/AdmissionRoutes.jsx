@@ -31,9 +31,9 @@ const NotFound = lazy(() => import("../NotFound"));
 const AdmissionRoutes = () => {
   return (
     <>
-      <Route path="/" element={<Navigate to="/login" />} />
-
-      <Route path="/login" element={<AdminLogin />} />
+      {/* <Route path="/" element={<Navigate to="/login" />} />
+      <Route path="/login" element={<AdminLogin />} /> */}
+      <Route path="/" element={<AdminLogin />} />
       <Route path="/signup" element={<AdminSignup />} />
       <Route path="/forgot-password" element={<ForgotPassword />} />
       <Route path="/campus-selection" element={<CampusSelection />} />

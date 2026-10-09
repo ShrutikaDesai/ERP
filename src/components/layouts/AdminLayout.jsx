@@ -584,7 +584,7 @@ const AdminLayout = () => {
                     <button
                       className="w-full flex items-center gap-3 px-4 py-3 text-sm text-red-500"
                       onClick={() => {
-                        navigate("/login");
+                        navigate("/");
                       }}
                     >
                       <LogOut size={18} />

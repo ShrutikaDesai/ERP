@@ -209,7 +209,7 @@ const ForgotPassword = () => {
         {/* Back */}
 
         <button
-          onClick={() => navigate("/login")}
+          onClick={() => navigate("/")}
           style={{
             width: "100%",
             border: `1px solid ${theme.colors.border}`,
