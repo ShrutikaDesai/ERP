@@ -17,7 +17,7 @@ const ViewStudentDetails = lazy(() => import("../components/admin/module1/studen
 const AddStudent = lazy(() => import("../components/admin/module1/students/AddStudent"));
 const MarkAttendancePage = lazy(() => import("../components/admin/module1/attendance/MarkAttendancePage"));
 const AttendanceReportPage = lazy(() => import("../components/admin/module1/attendance/AttendanceReportPage"));
-const ReviewAdmission = lazy(() => import("../components/admin/module1/students/Reviewadmission"));
+const ReviewAdmission = lazy(() => import("../components/admin/module1/students/ReviewAdmission"));
 
 const CampusSelection = lazy(() => import("../components/admin/CampusSelection"));
 const BulkImport = lazy(() => import("../components/admin/module1/students/BulkImport"));

@@ -2,7 +2,7 @@ import React from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Home, ChevronRight } from "lucide-react";
 import { theme } from "@/theme/theme";
-import { useBreadcrumbExtra } from "../admin/BreadcrumbContext";
+import { useBreadcrumbExtra } from "./BreadcrumbContext";
 
 // path segment -> display label. Add new routes here as you add them to App.jsx
 const ROUTE_LABELS = {
